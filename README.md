@@ -4,8 +4,14 @@ GitHub Pages host for the apex domain **abdelkbirnainiaa.me**.
 
 ## Status
 
-This repository currently contains only a `CNAME` file — there is no
-`index.html`, so the domain resolves but serves nothing.
+Two things are incomplete:
+
+1. The repository contains only a `CNAME` file — there is no `index.html`, so
+   the site serves nothing.
+2. The custom domain is **not actually bound**. The `CNAME` file names
+   `abdelkbirnainiaa.me`, but the Pages configuration reports no custom domain,
+   and the site is published at <https://abdelkbirna.github.io/>. Set the
+   custom domain under **Settings → Pages** for the file to take effect.
 
 ## What lives here
 
