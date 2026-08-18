@@ -4,14 +4,12 @@ GitHub Pages host for the apex domain **abdelkbirnainiaa.me**.
 
 ## Status
 
-Two things are incomplete:
+The custom domain **is** bound — the site is published at
+<http://abdelkbirnainiaa.me/>. What is missing is content: the repository holds
+only a `CNAME` file, with no `index.html`, so the domain resolves to nothing.
 
-1. The repository contains only a `CNAME` file — there is no `index.html`, so
-   the site serves nothing.
-2. The custom domain is **not actually bound**. The `CNAME` file names
-   `abdelkbirnainiaa.me`, but the Pages configuration reports no custom domain,
-   and the site is published at <https://abdelkbirna.github.io/>. Set the
-   custom domain under **Settings → Pages** for the file to take effect.
+HTTPS is also not enforced yet. Once GitHub has issued the certificate, turn on
+**Enforce HTTPS** under Settings → Pages.
 
 ## What lives here
 
