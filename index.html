@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abdelkbir Nainiaa — full-stack web · QA automation · devops</title>
+<meta name="description" content="Abdelkbir Nainiaa builds full-stack web applications and ships them with a test suite and a pipeline. Robot Framework, Selenium, Docker, Jenkins, Allure.">
+<link rel="canonical" href="https://abdelkbirnainiaa.me/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abdelkbirnainiaa.me/">
+<meta property="og:title" content="Abdelkbir Nainiaa — full-stack web · QA automation · devops">
+<meta property="og:description" content="Builds full-stack web applications and ships them with a test suite and a pipeline.">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10131A" media="(prefers-color-scheme: dark)">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#F7F7F5;
+  --raised:#FFFFFF;
+  --ink:#14181F;
+  --muted:#626B7A;
+  --rule:#E1E3E7;
+  --pass:#12735A;
+  --cobalt:#1E3FB8;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --gut:clamp(1.25rem,5vw,2.5rem);
+  --max:68rem;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#10131A;
+    --raised:#161A23;
+    --ink:#E8EAED;
+    --muted:#98A1B0;
+    --rule:#262C38;
+    --pass:#3FB58C;
+    --cobalt:#8AA0F7;
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  color-scheme:light dark;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:color-mix(in srgb,var(--cobalt) 18%,transparent);
+}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:clamp(1rem,.97rem + .18vw,1.0625rem);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-wrap:break-word;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:1px}
+
+.skip{
+  position:absolute;left:-9999px;top:0;
+  background:var(--ink);color:var(--paper);
+  padding:.6rem 1rem;font:500 .875rem/1 var(--body);z-index:20;
+}
+.skip:focus{left:.5rem;top:.5rem}
+
+.wrap{
+  max-width:var(--max);margin-inline:auto;
+  padding-inline:max(var(--gut),env(safe-area-inset-left)) max(var(--gut),env(safe-area-inset-right));
+}
+
+/* ── run bar ─────────────────────────────────────────── */
+.runbar{
+  position:sticky;top:0;z-index:10;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.runbar__in{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;min-width:0;
+  height:3rem;font:500 .8125rem/1 var(--mono);
+}
+.runbar__id{color:var(--muted);letter-spacing:.01em}
+.runbar__state{display:flex;align-items:center;gap:.5rem;color:var(--pass);font-variant-numeric:tabular-nums}
+.dot{width:.5rem;height:.5rem;border-radius:50%;background:currentColor;flex:none}
+.running .dot{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+
+/* ── hero ────────────────────────────────────────────── */
+.hero{padding-block:clamp(3rem,9vw,6.5rem) clamp(2.5rem,7vw,4.5rem)}
+.eyebrow{
+  margin:0 0 1.25rem;
+  font:500 .75rem/1 var(--mono);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+}
+h1{
+  margin:0;
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(2.5rem,1.5rem + 5vw,5rem);
+  line-height:.98;letter-spacing:-.035em;
+  text-wrap:balance;
+}
+.role{
+  margin:.9rem 0 0;
+  font:400 clamp(1rem,.95rem + .35vw,1.1875rem)/1.5 var(--body);
+  color:var(--muted);
+}
+
+/* ── the run (signature) ─────────────────────────────── */
+.run{
+  margin-top:clamp(2rem,5vw,3rem);
+  background:var(--raised);
+  border:1px solid var(--rule);
+  border-radius:3px;
+  overflow:hidden;
+}
+.run__head{
+  display:flex;justify-content:space-between;gap:1rem;
+  padding:.75rem 1.1rem;
+  border-bottom:1px solid var(--rule);
+  font:500 .75rem/1.4 var(--mono);
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+}
+.run__list{margin:0;padding:.4rem 0;list-style:none}
+.assert{
+  display:flex;align-items:baseline;gap:.75rem;
+  padding:.5rem 1.1rem;
+  font:400 .9375rem/1.5 var(--mono);
+  color:var(--muted);
+  transition:color .25s ease;
+}
+.assert__mark{flex:none;width:1ch;color:var(--muted);transition:color .25s ease}
+.assert__txt{flex:none}
+.assert__lead{
+  flex:1 1 auto;min-width:1.5rem;align-self:center;height:0;
+  border-bottom:1px dotted var(--rule);
+}
+.assert__ms{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);transition:color .25s ease}
+.assert.is-pass{color:var(--ink)}
+.assert.is-pass .assert__mark{color:var(--pass)}
+.assert.is-pass .assert__ms{color:var(--muted)}
+.run__sum{
+  padding:.8rem 1.1rem;
+  border-top:1px solid var(--rule);
+  font:500 .875rem/1.4 var(--mono);
+  color:var(--muted);
+}
+.run__sum b{color:var(--pass);font-weight:500}
+
+.thesis{
+  margin:clamp(2rem,5vw,3rem) 0 0;
+  max-width:46ch;
+  font-size:clamp(1.0625rem,1rem + .4vw,1.3125rem);
+  line-height:1.55;text-wrap:pretty;
+}
+.thesis em{font-style:normal;color:var(--muted)}
+
+.actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.6rem 1rem;
+  border:1px solid var(--rule);border-radius:2px;
+  background:var(--raised);
+  font:500 .875rem/1 var(--body);text-decoration:none;
+  transition:border-color .18s ease,color .18s ease;
+}
+.btn:hover{border-color:var(--cobalt);color:var(--cobalt)}
+.btn--go{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn--go:hover{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+
+/* ── sections ────────────────────────────────────────── */
+section{border-top:1px solid var(--rule);scroll-margin-top:3.5rem}
+.sec{padding-block:clamp(2.75rem,7vw,4.5rem)}
+.sec__h{
+  margin:0 0 2rem;
+  font:600 .8125rem/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+
+/* ── work ────────────────────────────────────────────── */
+.specs{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.spec{
+  display:grid;
+  grid-template-columns:13rem minmax(0,1fr);
+  grid-template-areas:"top desc" "top tags";
+  column-gap:2.5rem;row-gap:.7rem;align-items:start;
+  background:var(--raised);padding:1.5rem 1.3rem;
+  text-decoration:none;
+  transition:background .18s ease;
+}
+.spec:hover{background:color-mix(in srgb,var(--cobalt) 5%,var(--raised))}
+.spec__top{grid-area:top;display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;min-width:0}
+.spec__name{
+  font:600 1.125rem/1.3 var(--display);letter-spacing:-.015em;
+}
+.spec:hover .spec__name{color:var(--cobalt)}
+.spec__status{
+  font:500 .6875rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--pass);white-space:nowrap;
+}
+.spec__status[data-s="source"]{color:var(--muted)}
+.spec__desc{grid-area:desc;margin:0;color:var(--muted);max-width:62ch}
+.spec__tags{grid-area:tags;font:400 .75rem/1.5 var(--mono);color:var(--muted);letter-spacing:.01em}
+
+/* ── stack ───────────────────────────────────────────── */
+.stack{display:grid;gap:0;margin:0}
+.row{
+  display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:1rem;
+  padding:.85rem 0;border-bottom:1px solid var(--rule);
+}
+.row:first-child{border-top:1px solid var(--rule)}
+.row dt{font:500 .75rem/1.7 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.row dd{margin:0;font:400 .9375rem/1.7 var(--mono)}
+
+/* ── footer ──────────────────────────────────────────── */
+footer{border-top:1px solid var(--rule)}
+.foot{
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
+  padding-block:2rem calc(2.5rem + env(safe-area-inset-bottom));
+  font:400 .8125rem/1.6 var(--mono);color:var(--muted);
+}
+.foot a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule)}
+.foot a:hover{color:var(--cobalt);border-color:var(--cobalt)}
+.foot__links{display:flex;flex-wrap:wrap;gap:1.25rem}
+
+@media (max-width:52rem){
+  .spec{grid-template-columns:minmax(0,1fr);grid-template-areas:"top" "desc" "tags";row-gap:.6rem}
+  .spec__top{flex-direction:row;align-items:baseline;justify-content:space-between;width:100%;gap:1rem;min-width:0}
+}
+@media (max-width:34rem){
+  .row{grid-template-columns:minmax(0,1fr);gap:.15rem}
+  .assert{font-size:.8125rem;gap:.5rem}
+  .assert__txt{flex:1 1 auto}
+  .assert__lead{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="runbar" id="runbar">
+  <div class="wrap runbar__in">
+    <span class="runbar__id" translate="no">abdelkbirnainiaa.me</span>
+    <span class="runbar__state"><span class="dot" aria-hidden="true"></span><span id="clock">00:00.00</span></span>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero wrap" style="border-top:0">
+    <p class="eyebrow">suite · profile</p>
+    <h1>Abdelkbir Nainiaa</h1>
+    <p class="role">full-stack web · QA automation · devops — El Jadida, Morocco</p>
+
+    <div class="run" id="run" aria-live="polite" aria-atomic="false">
+      <div class="run__head"><span translate="no">profile.spec</span><span id="runstate">running</span></div>
+      <ul class="run__list" id="asserts">
+        <li class="assert" data-ms="0.04"><span class="assert__mark" aria-hidden="true">○</span><span class="assert__txt">builds full-stack web apps</span><span class="assert__lead" aria-hidden="true"></span><span class="assert__ms">—</span></li>
+        <li class="assert" data-ms="0.11"><span class="assert__mark" aria-hidden="true">○</span><span class="assert__txt">ships them with a test suite</span><span class="assert__lead" aria-hidden="true"></span><span class="assert__ms">—</span></li>
+        <li class="assert" data-ms="0.07"><span class="assert__mark" aria-hidden="true">○</span><span class="assert__txt">runs the suite in a pipeline</span><span class="assert__lead" aria-hidden="true"></span><span class="assert__ms">—</span></li>
+        <li class="assert" data-ms="0.02"><span class="assert__mark" aria-hidden="true">○</span><span class="assert__txt">reads the report when it fails</span><span class="assert__lead" aria-hidden="true"></span><span class="assert__ms">—</span></li>
+      </ul>
+      <p class="run__sum" id="sum">running…</p>
+    </div>
+
+    <p class="thesis">I build full-stack web applications, then make them provable — a suite that runs in a container, and a pipeline that runs the suite. <em>Most projects stop at “it works on my machine.” I stop at “it works in CI.”</em></p>
+
+    <nav class="actions" aria-label="Primary">
+      <a class="btn btn--go" href="#work">See the Work</a>
+      <a class="btn" href="https://github.com/AbdelkbirNA">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/abdelkbir-nainiaa">LinkedIn</a>
+    </nav>
+  </section>
+
+  <section id="work">
+    <div class="wrap sec">
+      <h2 class="sec__h">Selected work</h2>
+      <div class="specs">
+
+        <a class="spec" href="https://github.com/AbdelkbirNA/QAReports">
+          <span class="spec__top">
+            <span class="spec__name" translate="no">QAReports</span>
+            <span class="spec__status">api + ui suite</span>
+          </span>
+          <p class="spec__desc">A test suite that runs itself. Jenkins checks out, Docker Compose runs the Robot Framework specs against the API and the browser, and Allure publishes a report someone who didn’t write the tests can read.</p>
+          <span class="spec__tags" translate="no">Robot Framework · Selenium · Docker · Jenkins · Allure</span>
+        </a>
+
+        <a class="spec" href="https://cloudcache-frontend.onrender.com">
+          <span class="spec__top">
+            <span class="spec__name" translate="no">CloudCache</span>
+            <span class="spec__status">live</span>
+          </span>
+          <p class="spec__desc">A distributed cache that measures what Redis actually saves you against a cold database, instead of asserting it. Cache-aside with automatic invalidation on every write.</p>
+          <span class="spec__tags" translate="no">Node · Express · Redis · MongoDB · Docker · Render</span>
+        </a>
+
+        <a class="spec" href="https://orno-plante.vercel.app">
+          <span class="spec__top">
+            <span class="spec__name" translate="no">OrnoPlante</span>
+            <span class="spec__status">live</span>
+          </span>
+          <p class="spec__desc">Identify an ornamental plant from a photograph, then track your collection. A machine-learning image model behind a Next.js application, with CI on every push.</p>
+          <span class="spec__tags" translate="no">Next.js · Prisma · MySQL · Docker · GitHub Actions</span>
+        </a>
+
+        <a class="spec" href="https://github.com/AbdelkbirNA/ProjetWeb_EduSchool">
+          <span class="spec__top">
+            <span class="spec__name" translate="no">EduSchool</span>
+            <span class="spec__status" data-s="source">source</span>
+          </span>
+          <p class="spec__desc">A teaching space for a professor: courses and resources, quizzes, a student forum, and direct messaging — with separate student and staff roles.</p>
+          <span class="spec__tags" translate="no">Laravel · Blade · MySQL · Bootstrap</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap sec">
+      <h2 class="sec__h">Stack</h2>
+      <dl class="stack">
+        <div class="row"><dt>languages</dt><dd translate="no">Java · Python · JavaScript · TypeScript · PHP · C</dd></div>
+        <div class="row"><dt>frontend</dt><dd translate="no">React · Next.js · Tailwind · Sass</dd></div>
+        <div class="row"><dt>backend</dt><dd translate="no">Node · Express · Laravel · Spring · Prisma</dd></div>
+        <div class="row"><dt>data</dt><dd translate="no">PostgreSQL · MySQL · MongoDB · Redis</dd></div>
+        <div class="row"><dt>testing</dt><dd translate="no">Robot Framework · Selenium · Postman · Allure</dd></div>
+        <div class="row"><dt>devops</dt><dd translate="no">Docker · Jenkins · GitHub Actions · Render · Linux</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap sec">
+      <h2 class="sec__h">Contact</h2>
+      <p class="thesis" style="margin-top:0">Engineering student at ENSIASD, finishing a cycle in AI &amp; data science. If you are building something that needs to keep working after it ships, I’d like to hear about it.</p>
+      <nav class="actions" aria-label="Contact">
+        <a class="btn btn--go" href="mailto:abdlekbir.nainiaa12@gmail.com">Email Me</a>
+        <a class="btn" href="https://www.linkedin.com/in/abdelkbir-nainiaa">LinkedIn</a>
+        <a class="btn" href="https://github.com/AbdelkbirNA">GitHub</a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="yr">2026</span> Abdelkbir Nainiaa</span>
+    <span class="foot__links">
+      <a href="https://github.com/AbdelkbirNA">github.com/AbdelkbirNA</a>
+      <a href="https://www.linkedin.com/in/abdelkbir-nainiaa">linkedin</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var rows   = Array.prototype.slice.call(document.querySelectorAll('.assert'));
+  var clock  = document.getElementById('clock');
+  var sum    = document.getElementById('sum');
+  var state  = document.getElementById('runstate');
+  var bar    = document.getElementById('runbar');
+  var total  = rows.reduce(function(t,r){ return t + parseFloat(r.dataset.ms); }, 0);
+
+  function fmt(s){
+    var m = Math.floor(s/60), rest = s - m*60;
+    return String(m).padStart(2,'0') + ':' + rest.toFixed(2).padStart(5,'0');
+  }
+  function pass(r){
+    r.classList.add('is-pass');
+    r.querySelector('.assert__mark').textContent = '✓';
+    r.querySelector('.assert__ms').textContent = parseFloat(r.dataset.ms).toFixed(2) + 's';
+  }
+  function settle(){
+    state.textContent = 'passed';
+    bar.classList.remove('running');
+    clock.textContent = fmt(total);
+    sum.innerHTML = '<b>' + rows.length + ' passed</b> · 0 failed · ' + total.toFixed(2) + 's';
+  }
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { rows.forEach(pass); settle(); return; }
+
+  bar.classList.add('running');
+  var elapsed = 0, i = 0;
+  (function step(){
+    if (i >= rows.length) { settle(); return; }
+    var row = rows[i], ms = parseFloat(row.dataset.ms);
+    // scale the fake seconds into a watchable ~1.4s sequence
+    var wait = Math.max(160, ms * 1400);
+    setTimeout(function(){
+      pass(row);
+      elapsed += ms;
+      clock.textContent = fmt(elapsed);
+      i++; step();
+    }, wait);
+  })();
+})();
+</script>
+</body>
+</html>

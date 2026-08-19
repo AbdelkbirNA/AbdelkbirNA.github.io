@@ -1,34 +1,56 @@
 # abdelkbirnainiaa.me
 
-GitHub Pages host for the apex domain **abdelkbirnainiaa.me**.
+Personal site for Abdelkbir Nainiaa, served by GitHub Pages at
+<https://abdelkbirnainiaa.me>.
 
-## Status
-
-The custom domain **is** bound — the site is published at
-<http://abdelkbirnainiaa.me/>. What is missing is content: the repository holds
-only a `CNAME` file, with no `index.html`, so the domain resolves to nothing.
-
-HTTPS is also not enforced yet. Once GitHub has issued the certificate, turn on
-**Enforce HTTPS** under Settings → Pages.
-
-## What lives here
+## What's here
 
 | File | Purpose |
 |---|---|
+| `index.html` | The whole site — markup, styles and script in one file, no build step |
 | `CNAME` | Binds `abdelkbirnainiaa.me` to this Pages site |
 
-## Publishing a site
+## Editing it
 
-Add an `index.html` (or any static build output) to the default branch and
-GitHub Pages will serve it at the custom domain. Keep `CNAME` in place — Pages
-rewrites or drops the domain binding if that file disappears from the published
-branch.
+There is no toolchain. Edit `index.html` and push to `main`; Pages redeploys.
 
-For a framework build, either commit the built output to the branch Pages
-serves, or add a workflow that builds and deploys to Pages on push.
+The content that changes most often is near the bottom of the file:
 
-## DNS
+- **Assertions** — the `<li class="assert">` items in `#asserts`. The `data-ms`
+  attribute is that row's timing; the summary totals them automatically.
+- **Projects** — the `<a class="spec">` blocks under *Selected work*.
+- **Stack** — the `<div class="row">` pairs under *Stack*.
 
-The apex domain needs `A` records pointing at GitHub's Pages IPs, and
-`www` a `CNAME` to `abdelkbirna.github.io`. Enforce HTTPS in the repository's
-Pages settings once the certificate is issued.
+## Design
+
+The page is built as a passing test suite: the claims resolve from pending to
+`✓` on load, with a run bar counting up and a summary line. The conceit is the
+argument — the work is about shipping software with a suite and a pipeline, so
+the page demonstrates that rather than asserting it.
+
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| `--paper` | `#F7F7F5` | `#10131A` | Page ground |
+| `--raised` | `#FFFFFF` | `#161A23` | Cards |
+| `--ink` | `#14181F` | `#E8EAED` | Body text |
+| `--muted` | `#626B7A` | `#98A1B0` | Secondary text |
+| `--pass` | `#12735A` | `#3FB58C` | Passing status |
+| `--cobalt` | `#1E3FB8` | `#8AA0F7` | Accent, focus rings |
+
+Type: **Archivo** for display, **IBM Plex Sans** for body, **IBM Plex Mono** for
+assertions, timings and tags.
+
+Every foreground/background pair meets WCAG AA in both themes (lowest ratio
+5.02:1). The run animation is skipped entirely under `prefers-reduced-motion`,
+which renders every assertion as already passed.
+
+## Checks
+
+```bash
+# no horizontal overflow at any width, no mechanical layout violations
+open index.html
+```
+
+Verified: AA contrast in both themes, visible keyboard focus, skip link, no
+horizontal overflow from 500px to 1440px, reduced-motion path, `aria-live` on
+the async run.
