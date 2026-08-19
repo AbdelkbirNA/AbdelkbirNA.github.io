@@ -1,14 +1,24 @@
-# abdelkbirnainiaa.me
+# abdelkbirna.github.io
 
 Personal site for Abdelkbir Nainiaa, served by GitHub Pages at
-<https://abdelkbirnainiaa.me>.
+<https://abdelkbirna.github.io>.
 
 ## What's here
 
 | File | Purpose |
 |---|---|
 | `index.html` | The whole site — markup, styles and script in one file, no build step |
-| `CNAME` | Binds `abdelkbirnainiaa.me` to this Pages site |
+
+## A note on the domain
+
+`abdelkbirnainiaa.me` is served by **Vercel**, not by this repository. This repo
+previously carried a `CNAME` claiming that domain, which made GitHub redirect
+`abdelkbirna.github.io` *and every project page under it* to a host that does not
+serve them — that is what broke the QAReports live report link.
+
+The `CNAME` has been removed. Do not re-add it while Vercel serves the apex
+domain. To move the domain here later, first repoint the DNS A records away from
+Vercel, then set the custom domain under **Settings → Pages**.
 
 ## Editing it
 
